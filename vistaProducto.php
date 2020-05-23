@@ -20,8 +20,17 @@ require_once __DIR__.'/includes/config.php';
             <div id="contenido">
                 <h1>Mostrando productos</h1>
             <?php 
-                $producto ='';
-                $producto = Producto::muestraProductos($producto);
+                $result = Producto::muestraProds();
+                $array = $result;
+                foreach($array as $key => $fila){
+                ?>
+                <li>IdProd: <?php echo $fila['idProd'];?></br>
+                <li>Nombre Producto: <?php echo $fila['nombreProd'];?></br>
+                <li>Descripcion: <?php echo $fila['descr'];?></br>
+                <li>Precio: <?php echo $fila['precio'];?></br>
+                <li>Categoria: <?php echo $fila['categoria'];?></br>
+                <?php   
+                }
             ?>
             </div>
         </div>  

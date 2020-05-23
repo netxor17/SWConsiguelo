@@ -1,15 +1,13 @@
-<?php
-use es\fdi\ucm\aw\Producto;
-
+<?php 
 require_once __DIR__.'/includes/config.php';
+use es\fdi\ucm\aw\Producto;
 ?>
-
 
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Mostrar producto</title>
+        <title>Mostrar busqueda</title>
     </head>
 
     <body>
@@ -18,13 +16,18 @@ require_once __DIR__.'/includes/config.php';
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Mostrando productos</h1>
-            <?php 
-                $producto = '';
-                $producto = Producto::muestraProductos();
-            ?>
-            </div>
-        </div>  
-    </body>
-</html>
+                <h1>Mostrando busqueda</h1>
+                <?php
+                foreach($array as $key => $fila){
+                 echo $fila['tipo'];
+                 echo $fila['descripcion'];
+                }
+                ?>
+                </tbody>
+                </table>
 
+            </div>
+        </div>
+    </body>
+    
+</html>
