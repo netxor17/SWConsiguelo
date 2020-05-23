@@ -28,26 +28,22 @@ class Producto
         return $result;
     }
 
-    /*public static function muestraProds(){ //funcion que muestra todos los productos disponibles
+    public static function muestraProds(){ //funcion que muestra todos los productos disponibles
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM Productos P");
         $rs = $conn->query($query);
         $result = false;
+        $i=0;
         if ($rs) {
             if ( $rs->num_rows > 0) {
-                $fila = $rs->fetch_assoc();
-                $array[0]['idProd'] = $fila['id'];              
-                $array[0]['nombreProd'] = $fila['nombre'];
-                $array[0]['descr'] = $fila['descripcion'];
-                $array[0]['precio'] = $fila['precio'];
-                $array[0]['unidadesDisp'] = $fila['unidadesDisponibles'];
-                $array[0]['talla'] = $fila['talla'];
-                $array[0]['categoria'] = $fila['categoria'];
-                $array[0]['reseña'] = $fila['reseña'];
-                $array[0]['agotado'] = $fila['agotado'];
-                $array[0]['numEstrellas'] = $fila['numEstrellas'];
-                $prod= $array;
+                while ($array=$rs->fetch_array()){
+                $claves = array_keys($array);
+                foreach($claves as $clave){
+                    $arrayauxliar[$i][$clave]=$array[$clave];
+                }           
+                $i++;
+                $prod = $arrayauxliar;
                 $result = $prod;
             }
             $rs->free();
@@ -56,10 +52,11 @@ class Producto
             exit();
         }
         return $result;
-    }*/
+    }
+}
 
 
-    public static function muestraProductos($producto)
+    /*public static function muestraProductos($producto)
     {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -131,7 +128,7 @@ class Producto
             exit();
         }
         return $result;
-    }
+    }*/
 
     public static function muestraProductosPorNombre()
     {
