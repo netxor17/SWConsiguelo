@@ -35,6 +35,9 @@ require_once __DIR__.'/includes/config.php';
     header("Location: ./vistaCarrito.php");
 }
     else{
-        header("Location: ./login.php");
+        echo '<script type="text/javascript">
+        alert("No has hecho login, se te mandará a login");
+        window.location.assign("login.php");
+        </script>';
 }
     

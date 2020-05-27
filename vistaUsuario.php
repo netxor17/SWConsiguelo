@@ -20,7 +20,7 @@ use es\fdi\ucm\aw\Usuario;
                 <?php
                 if(!isset($_SESSION['login'])){
                     echo '<script type="text/javascript">
-                     alert("No has hecho login");
+                     alert("No has hecho login, se te mandará a login");
                      window.location.assign("login.php");
                      </script>';
                      
@@ -40,9 +40,11 @@ use es\fdi\ucm\aw\Usuario;
                     <li>Codigo Postal: <?php echo $fila['cp'];?></br>
                     <li>Email de contacto: <?php echo $fila['email'];?></br>
                     <?php
+                     }
                     }
-                }
-        ?>
+                    ?>
+                    <li>Pedidos del usuario: <?php echo $_SESSION['username'];?></li></br>
+                    <a href="vistaPedidos.php">Pedidos</a>
             </div>
         </div>
     </body>

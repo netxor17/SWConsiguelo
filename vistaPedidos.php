@@ -1,6 +1,5 @@
 <?php
-use es\fdi\ucm\aw\Producto;
-
+use es\fdi\ucm\aw\Pedido;
 
 require_once __DIR__.'/includes/config.php';
 ?>
@@ -10,7 +9,7 @@ require_once __DIR__.'/includes/config.php';
     <head>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Mostrar producto</title>
+        <title>Pedidos de un usuario</title>
     </head>
 
     <body>
@@ -19,9 +18,9 @@ require_once __DIR__.'/includes/config.php';
                 require("includes/common/cabecera.php");
             ?>
             <div id="contenido">
-                <h1>Mostrando todos los productos</h1>
+                <h1>Pedidos del usuario <?php echo $_SESSION['username'];?></h1>
             <?php 
-                $result = Producto::muestraProds();
+                $result = Pedido::muestraPedidos();
                 $array = $result;
                 foreach($array as $key => $fila){
                 ?>
@@ -30,7 +29,6 @@ require_once __DIR__.'/includes/config.php';
                 Descripcion: <?php echo $fila['descripcion'];?></br>
                 Precio: <?php echo $fila['precio'];?></br>
                 Categoria: <?php echo $fila['categoria'];?></br>
-                <a href="./FormularioCarrito.php">Añadir al carrito</a>
                 </br>
                 <?php  
                 }
@@ -39,4 +37,3 @@ require_once __DIR__.'/includes/config.php';
         </div>  
     </body>
 </html>
-

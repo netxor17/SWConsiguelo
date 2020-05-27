@@ -55,81 +55,6 @@ class Producto
     }
 }
 
-
-    /*public static function muestraProductos($producto)
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM Productos P"); $conn->real_escape_string($producto);
-        $rs = $conn->query($query);
-        $result = false;
-        ?>
-        <centre>
-        <table>
-        <thead>
-            <tr>
-                 <th>Imagen</th>
-                 <th>Nombre</th>
-                 <th>Descripcion</th>
-                 <th>Precio</th>
-                 <th>Unidades</th>
-                 <th>Talla</th>
-                 <th>Color</th>
-                 <th>Categoria</th>
-                 <th>Reseña</th>
-                 <th>Agotado</th>
-                 <th>Numero Estrellas</th>
-            </tr>
-        </thead>
-        <tbody>
-         <?php
-        if ($rs) {
-           // if ( $rs->num_rows >= 1) {
-               while( $fila = $rs->fetch_assoc()){
-                $id=$fila['id'];
-                $nombre=$fila['nombre'];
-                $descripcion=$fila['descripcion'];
-                $precio=$fila['precio'];
-                $udDisp=$fila['unidadesDisponibles'];
-                $talla=$fila['talla'];
-                $color=$fila['color'];
-                $categoria=$fila['categoria'];
-                $reseña=$fila['reseña'];
-                $agotado=$fila['agotado'];
-                $numEstrellas=$fila['numEstrellas'];
-                ?>
-                
-        <tr>
-        <td><img src="<?php echo $fila['imagen']; ?>" width='85' height='85'/></td>
-        <td><?php echo $nombre; ?></td>
-        <td><?php echo $descripcion; ?></td>
-        <td><?php echo $precio; ?></td>
-        <td><?php echo $udDisp;?></td>
-        <td><?php echo $talla;?></td>
-        <td><?php echo $color; ?></td>
-        <td><?php echo $categoria; ?></td>
-        <td><?php echo $reseña; ?></td>
-        <td><?php echo $agotado; ?></td>
-        <td><?php echo $numEstrellas; ?></td>
-        <form method="get" action="add">
-        </form>
-        <td><a href="./añadirAlCarrito.php?id=<?php echo $fila['id'];?>">Añadir al carrito</td>
-        </tr>
-        <?php
-            }
-        ?>
-            </tbody>
-            </table>
-            </centre>
-            <?php
-            $rs->free();
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }*/
-
     public static function muestraProductosPorNombre()
     {
         $app = Aplicacion::getSingleton();
@@ -137,52 +62,20 @@ class Producto
         $nombreProd = $_POST['nombre'];
         $query = sprintf("SELECT * FROM productos P WHERE p.nombre = '$nombreProd'");$conn->real_escape_string($nombreProd);
         $rs = $conn->query($query);
-        $result = false;
-        ?>
-        <centre>
-        <table>
-        <thead>
-            <tr>
-                 <th>Imagen</th>
-                 <th>Nombre</th>
-                 <th>Descripcion</th>
-                 <th>Precio</th>
-                 <th>Unidades</th>
-                 <th>Talla</th>
-                 <th>Color</th>
-                 <th>Categoria</th>
-                 <th>Reseña</th>
-                 <th>Agotado</th>
-                 <th>Numero Estrellas</th>
-            </tr>
-        </thead>
-        <tbody>
-         <?php
+        $i=0;
         if ($rs) {
-           // if ( $rs->num_rows >= 1) {
-               while( $fila = $rs->fetch_assoc()){
-                ?>
-        <tr>
-        <td><img src="<?php echo $fila['imagen']; ?>" width='85' height='85'/></td>
-        <td><?php echo $fila['nombre']; ?></td>
-        <td><?php echo $fila['descripcion']; ?></td>
-        <td><?php echo $fila['precio']; ?></td>
-        <td><?php echo $fila['unidadesDisponibles'];?></td>
-        <td><?php echo $fila['talla']; ?></td>
-        <td><?php echo $fila['color']; ?></td>
-        <td><?php echo $fila['categoria']; ?></td>
-        <td><?php echo $fila['reseña']; ?></td>
-        <td><?php echo $fila['agotado']; ?></td>
-        <td><?php echo $fila['numEstrellas']; ?></td>
-        </tr>
-        <?php
-            }
-        ?>
-            </tbody>
-            </table>
-            </centre>
-            <?php
+            if ( $rs->num_rows > 0) {
+                while ($array=$rs->fetch_array()){
+                $claves = array_keys($array);
+                foreach($claves as $clave){
+                    $arrayauxliar[$i][$clave]=$array[$clave];
+                }           
+                $i++;
+                $prod = $arrayauxliar;
+                $result = $prod;
+                }
             $rs->free();
+            }   
         } else {
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
@@ -194,53 +87,22 @@ class Producto
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $nombreCat = $_POST['tipo'];
-        $query = sprintf("SELECT * FROM productos P WHERE p.categoria = '$nombreCat'");$conn->real_escape_string($nombreCat);
+        $query = sprintf("SELECT * FROM productos P WHERE P.categoria = '$nombreCat'");$conn->real_escape_string($nombreCat);
         $rs = $conn->query($query);
         $result = false;
-        ?>
-        <centre>
-        <table>
-        <thead>
-            <tr>
-                 <th>Imagen</th>
-                 <th>Nombre</th>
-                 <th>Descripcion</th>
-                 <th>Precio</th>
-                 <th>Unidades</th>
-                 <th>Talla</th>
-                 <th>Color</th>
-                 <th>Categoria</th>
-                 <th>Reseña</th>
-                 <th>Agotado</th>
-                 <th>Numero Estrellas</th>
-            </tr>
-        </thead>
-        <tbody>
-         <?php
+        $i=0;
         if ($rs) {
-           // if ( $rs->num_rows >= 1) {
-               while( $fila = $rs->fetch_assoc()){
-                ?>
-        <tr>
-        <td><img src="<?php echo $fila['imagen']; ?>" width='85' height='85'/></td>
-        <td><?php echo $fila['nombre']; ?></td>
-        <td><?php echo $fila['descripcion']; ?></td>
-        <td><?php echo $fila['precio']; ?></td>
-        <td><?php echo $fila['unidadesDisponibles'];?></td>
-        <td><?php echo $fila['talla']; ?></td>
-        <td><?php echo $fila['color']; ?></td>
-        <td><?php echo $fila['categoria']; ?></td>
-        <td><?php echo $fila['reseña']; ?></td>
-        <td><?php echo $fila['agotado']; ?></td>
-        <td><?php echo $fila['numEstrellas']; ?></td>
-        </tr>
-        <?php
+            if ( $rs->num_rows > 0) {
+                while ($array=$rs->fetch_array()){
+                $claves = array_keys($array);
+                foreach($claves as $clave){
+                    $arrayauxliar[$i][$clave]=$array[$clave];
+                }           
+                $i++;
+                $prod = $arrayauxliar;
+                $result = $prod;
+                }
             }
-        ?>
-            </tbody>
-            </table>
-            </centre>
-            <?php
             $rs->free();
         } else {
             echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -249,26 +111,6 @@ class Producto
         return $result;
     }
 
-    /*public static function buscaPorCategoria()
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $nombreCat = $_POST['tipo'];
-        $query = sprintf("SELECT * FROM productos P WHERE p.categoria = '$nombreCat'");$conn->real_escape_string($nombreCat);
-        $rs = $conn->query($query);
-        $result = false;
-        if ($rs) {
-            while( $fila = $rs->fetch_assoc()){
-            echo $fila['tipo'];
-            echo $fila['descripcion'];
-            }
-            $rs->free();
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }*/
 
 
     public static function muestraProductosPorPrecioDesc($producto)
